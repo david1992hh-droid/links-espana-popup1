@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LINKS ESPAÑA - Descuento</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: transparent;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,.55);
+      z-index: 9999;
+    }
+
+    .popup {
+      position: relative;
+      width: min(390px, 100%);
+      padding: 30px 24px 26px;
+      text-align: center;
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 18px 55px rgba(0,0,0,.30);
+      animation: aparecer .25s ease-out;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(.92) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border: 0;
+      border-radius: 50%;
+      background: #f1f1f1;
+      color: #333;
+      font-size: 22px;
+      line-height: 34px;
+      cursor: pointer;
+    }
+
+    .close:hover { background: #ddd; }
+
+    .brand {
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #555;
+    }
+
+    .emoji { font-size: 42px; }
+
+    h1 {
+      margin: 8px 0 8px;
+      font-size: 28px;
+      color: #111;
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .code {
+      display: inline-block;
+      padding: 11px 18px;
+      margin-bottom: 16px;
+      border: 2px dashed #111;
+      border-radius: 12px;
+      background: #f7f7f7;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #111;
+    }
+
+    .copy {
+      display: block;
+      width: 100%;
+      padding: 13px 18px;
+      border: 0;
+      border-radius: 12px;
+      background: #111;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .copy:hover { opacity: .9; }
+
+    .hint {
+      margin: 13px 0 0;
+      font-size: 13px;
+      color: #777;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="overlay" id="overlay">
+    <div class="popup" role="dialog" aria-modal="true" aria-label="Descuento para nuevos usuarios">
+      <button class="close" id="closeBtn" aria-label="Cerrar">×</button>
+
+      <div class="brand">LINKS ESPAÑA</div>
+      <div class="emoji">🎁</div>
+      <h1>¡14 % DE DESCUENTO!</h1>
+      <p class="subtitle">Solo para nuevos usuarios</p>
+
+      <div class="code" id="discountCode">HSPA1</div>
+
+      <button class="copy" id="copyBtn">📋 COPIAR CÓDIGO</button>
+      <p class="hint" id="hint">¡Úsalo al registrarte!</p>
+    </div>
+  </div>
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const closeBtn = document.getElementById('closeBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const code = 'HSPA1';
+    const hint = document.getElementById('hint');
+
+    function cerrar() {
+      overlay.classList.add('hidden');
+    }
+
+    closeBtn.addEventListener('click', cerrar);
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) cerrar();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') cerrar();
+    });
+
+    copyBtn.addEventListener('click', async function() {
+      try {
+        await navigator.clipboard.writeText(code);
+        copyBtn.textContent = '✅ ¡CÓDIGO COPIADO!';
+        hint.textContent = 'Código: HSPA1';
+        setTimeout(() => {
+          copyBtn.textContent = '📋 COPIAR CÓDIGO';
+        }, 2000);
+      } catch (e) {
+        hint.textContent = 'Copia manualmente el código: HSPA1';
+      }
+    });
+  </script>
+
+</body>
+</html>
